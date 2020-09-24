@@ -22,15 +22,27 @@ $(document).ready(function() {
     // slick slider 
     $('.slider').slick({
         slidesToShow: 1,
-        infinite: true,
         slidesToScroll: 1,
+        infinite: true,
         autoplay: true,
         autoplaySpeed: 2000,
         dots: true,
         arrows: false,
         customPaging : function(slider, i) {
             return '<div class="line"></div><div class="circle"></div>';
-        }
+        },
+        responsive: [
+            {
+              breakpoint: 800,
+              settings: {
+                dots: false,
+                infinite: true, 
+                slidesToShow: 1, 
+                swipe: true,
+                fade: true,
+              }
+            },
+        ]
     });
 
     // second screen slider
@@ -43,16 +55,24 @@ $(document).ready(function() {
         arrows: true,
         fade: true,
         prevArrow: '<div class="prev"><img class="prev_arrow" src="assets/img/prev_arrow.svg" alt="arrow"></div>',
-        nextArrow: '<div class="next"><img class="next_arrow" src="assets/img/next_arrow.svg" alt="arrow"></div>'
+        nextArrow: '<div class="next"><img class="next_arrow" src="assets/img/next_arrow.svg" alt="arrow"></div>',
+        responsive: [
+            {
+              breakpoint: 800,
+              settings: {
+                swipe: true
+              }
+            },
+        ]
     });
 
     $('.second_slider').on('beforeChange', function(event, slick, currentSlide, nextSlide){
         let $current = $('.second_slider .slick-slide[data-slick-index='+ currentSlide+']');
         let $next = $('.second_slider .slick-slide[data-slick-index='+ nextSlide+']');
 
-        $current.find('.slider_photo').css('opacity', '0');
-        $current.find('.name').css('opacity', '0');
-        $current.find('.description').css('opacity', '0');
+        $current.find('.slider_photo').css('opacity', '0.5');
+        $current.find('.name').css('opacity', '0.5');
+        $current.find('.description').css('opacity', '0.5');
         $next.find('.name').css('opacity', '0');
         $next.find('.plashka_wrap').css('opacity', '0');
         $next.find('.description').css('opacity', '0');
@@ -92,7 +112,8 @@ $(document).ready(function() {
             {
               breakpoint: 800,
               settings: {
-                slidesToShow: 1
+                slidesToShow: 1,
+                swipe: true
               }
             },
         ]
@@ -110,9 +131,6 @@ $(document).ready(function() {
         $all_slides_feedback.text(slick.slideCount);
 
     });
-
-   
-  
 
     //  scroll to form
     $(function(){
@@ -134,8 +152,6 @@ $(document).ready(function() {
         type: 'image'
     });
     
-    
- 
     const maskInput = new MaskInput(document.querySelector('.input_tel'), {
         mask: '+7(000)000-00-00',
         alwaysShowMask: true,
@@ -143,13 +159,16 @@ $(document).ready(function() {
     });
 
     // MOBILE MENU SETTINGS
-    $('.mobile_menu').click(function(){
+    $('.mobile_menu').on('click touchstart',function(){
         $('.mobile').addClass('active');
           })
           $('.close_mob_menu').click(function(){
             $('.mobile').removeClass('active');
           })
           $('.mobile .wrap a').click(function(){
+            $('.mobile').removeClass('active');
+          })
+          $('.mobile .wrap .action_button').click(function(){
             $('.mobile').removeClass('active');
           })
           $(document).click(function(e){
@@ -162,6 +181,11 @@ $(document).ready(function() {
               $('.mobile').removeClass('active');
             }
         });
+    //  Animation of button scroll to top
+    $('.scroll_to_top').click(function(){
+        $('html, body').animate({scrollTop: 0}, 600);
+        return false;
+    });
 
 });
 
